@@ -1,0 +1,18 @@
+先安装node.js；
+下载文件后，原地解压其中所有.zip文件
+
+./agent-tars --provider openrouter --model xx --apiKey xx  --workspace xx
+
+
+在python中调用agent-tars：
+
+预先执行agent-tars命令启动，之后执行如下命令
+
+import requests
+import json
+response = requests.post('http://localhost:8888/api/v1/sessions/create')
+session_id = response.json()['sessionId']
+
+query_data = {'sessionId': session_id, 'query': '读取3FS目录下的check_rmrf函数源码，并写入到check_rmrf.txt文件中'}
+
+response = requests.post('http://localhost:8888/api/v1/sessions/query/', headers={'Content-Type': 'application/json'}, json=query_data, stream=False)
